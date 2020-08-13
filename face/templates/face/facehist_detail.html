@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test face result</title>
+</head>
+<body>
+    <h1>face result page</h1>
+    
+    <p>object age: </p>{{object.age}}
+    <p>object gender: </p>{{object.gender}}
+    <p>object image: </p>{{object.image}}
+    <p>object face : </p>{{object.face}}
+    <p>object message : </p>{{object.message}}
+    <p>image : </p><img width="150px;" height="300px;" src="{{ object.image.url }}">
+</body>
+</html>
+
