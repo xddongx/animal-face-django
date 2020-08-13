@@ -19,7 +19,8 @@ from . import views
 
 app_name='face'
 urlpatterns = [
+    # path('', views.FaceCV, name='create'),
     path('', views.FaceCV.as_view(), name='create'),
-    path('facehist/<int:pk>', views.FaceDV.as_view(), name='detail')
+    path('facehist/<int:pk>', views.FaceDV.as_view(), name='detail'),
 ]
 

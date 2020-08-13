@@ -5,7 +5,7 @@ from .models import FaceHist
 class FaceForm(forms.ModelForm):
     class Meta:
         model = FaceHist
-        fields = ['age', 'gender','image']
+        fields = ('age', 'gender','image',)
         labels = {
             'age':('나이'),
             'gender':('연령'),
