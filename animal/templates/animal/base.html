@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>{%block title%}animal-face{%endblock%}</title>
+
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+	<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+	<!-- bootstrap -->
+	<link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	<!-- Css -->
+	<link href="{% static 'animal/css/bootstrap.css' %}" rel="stylesheet">
+	<link href="{% static 'animal/css/style.css' %}" rel="stylesheet">
+	<style>
+		#container {
+			height: 250px;
+		}
+
+		div#button {
+			position: absolute;
+			;
+			top: 50%;
+			left: 50%;
+			border: solid 1px gray;
+		}
+	</style>
+	{% block head %}{% endblock %}
+</head>
+
+<body>
+	{% include 'animal/navbar.html' %}
+	
+	{% block intro %}{% endblock %}
+	{% block content %}
+	{% endblock %}
+
+
+
+
+
+
+
+
+	<!-- script -->
+	<script src="{% static 'animal/js/jquery.js' %}"></script>
+	<script src="{% static 'animal/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'animal/js/modernizr.js' %}"></script>
+	<script src="{% static 'animal/js/script.js' %}"></script>
+
+
+
+</body>
+
+</html>

@@ -19,5 +19,5 @@ from . import views
 
 app_name='animal'
 urlpatterns = [
-    path('', views.index),
+    path('', views.index.as_view(), name='index'),
 ]

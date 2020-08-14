@@ -1,0 +1,23 @@
+{% load static %}
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container" style="padding-bottom: 20px;">
+        <div class="navbar-header">
+            <div class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu">
+                <span class="bar1"></span>
+                <span class="bar2"></span>
+                <span class="bar3"></span>
+          </div>
+            <div class="navbar-brand top" style="position:relative;">
+                <a href="http://localhost:8000/animal"><img src="{% static 'animal/img/logo.png' %}" alt=""></a>
+            </div>
+
+
+        <div class="collapse navbar-collapse" id="main-menu" style="position:absolute; top:0; right:10%; vertical-align:top;">
+           <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://localhost:8000/animal/#about">소개</a></li>
+            <li><a href="http://localhost:8000/animal/#portfolio">동물별 특징</a></li>
+          </ul>
+        </div>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

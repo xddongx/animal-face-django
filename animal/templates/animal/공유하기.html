@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script type="text/javascript">
+      function openNewWindow(){
+
+      newWindow = window.open("공유방법.html", "newWindow", "height=100, width=200, resizable=yes");
+
+      }
+      function closeWindow() {
+        var nvua = navigator.userAgent;
+        if (nvua.indexOf('MSIE') >= 0){
+          if(nvua.indexOf('MSIE 5.0') == -1) {
+            top.opener = '';
+          }
+        } else if (nvua.indexOf('Gecko') >= 0){
+          top.name = 'CLOSE_WINDOW';
+          wid = window.open('','CLOSE_WINDOW');
+        }
+        top.close();
+      }
+    </script>
+  </head>
+  <body>
+    <center>
+    <p>공유할 방법을 선택하세요</p>
+    </center>
+<!-- 공유방법 -->
+  <section>
+    <center>
+      <select name="file">
+      <option value="">파일 종류</option>
+      <option value="png">PNG</option>
+      <option value="jpg">JPG</option>
+      <option value="pdf">PDF</option>
+
+      </select>
+      <select name="location">
+      <option value="">경로</option>
+      <option value="카카오톡">카카오톡</option>
+      <option value="e-mail">E-mail</option>
+      </select>
+  </section>
+
+<!-- 취소 확인 버튼 -->
+  <section>
+    <center>
+    <br>
+    <input type="button" value="공유하기" onclick="openNewWindow()">
+    <input type='button' value='취소' onclick="closeWindow()">
+    </center>
+  </section>
+
+  </body>
+</html>

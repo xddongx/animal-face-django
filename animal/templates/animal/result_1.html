@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>animal-face</title>
+
+    <!-- Css -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+
+  <script type="text/javascript">
+  function test() {
+
+  alert("다운로드를 하겠습니다");
+
+ }
+
+  function load(URL) {
+  window.open(URL, "myWin", "left=300,top=300,width=400,height=300");
+  }
+
+  var newWindow;
+
+  function openNewWindow(){
+
+  newWindow = window.open("미리보기.html", "newWindow", "height=1000, width=800, resizable=yes");
+
+  }
+
+  function openNewWindow1(){
+
+  newWindow = window.open("공유방법_카카오톡.html", "newWindow", "height=200, width=300, resizable=yes");
+
+  }
+  </script>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand top" href="#">
+					<img src="img/logo.png" alt="">
+				</a>
+
+			</div>
+
+
+		</div><!-- /.container-fluid -->
+	</nav>
+
+<!-- intro -->
+  <section class="intro">
+
+      <center>
+        <span style=" font: italic bold 1.5em/1em Georgia, serif ; color: #000080;">
+        무슨 동물 상인가??
+        <hr>
+        </span>
+      </center>
+  </section>
+
+<!-- 이미지 결과 -->
+  <section>
+    <center>
+    <p>이미지 결과</p>
+    <center>
+  </section>
+
+<!-- 분석결과 -->
+  <section>
+    <center>
+      <p>분셕결과</p>
+    </center>
+  </section>
+
+<!-- 동물별 특징 -->
+  <section>
+    <center>
+      <p>동물별 특징 결과</p>
+    </center>
+  </section>
+
+
+
+
+<!-- 미리보기 , 공유하기 -->
+
+  <section>
+    <div class="button">
+
+    <center>
+    <button type="button" style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
+      onclick="openNewWindow()" >미리보기</button>
+      <button type="button" style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
+        onclick="openNewWindow1()" >공유하기</button>
+
+      </form>
+    </center>
+    </div>
+    <br>
+  <!--  다시하기, 다운로드 하기 버튼 -->
+    <div>
+      <center>
+    <form action="memberremove.do?empno=${memrm.empno }" name="removefrm" method="post">
+      <button type="button" style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
+        onclick="test()" >다운로드</button>
+        <button type="button" style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
+          onclick="location.href='result.html'" >다시하기</button>
+    </form>
+      </div>
+  </center>
+
+  </section>
+</body>
+</html>
