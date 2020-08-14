@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Insert title here</title>
+
+<script type="text/javascript">
+
+    var newWindow;
+
+    function openNewWindow(){
+
+        newWindow = window.open("미리보기.html", "newWindow", "height=1000, width=800, resizable=yes");
+
+    }
+  $('a').click(function(event){
+  event.preventDefault();
+});
+</script>
+<style>
+#browsers2{
+    background-color: white;
+    border: 1px solid purple;
+    border-radius: 10px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+
+margin: 0;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+-webkit-appearance: none;
+-moz-appearance: none;
+
+
+background-image:
+linear-gradient(45deg, transparent 50%, gray 50%),
+linear-gradient(135deg, gray 50%, transparent 50%),
+radial-gradient(#ddd 70%, transparent 72%);
+background-position:
+calc(100% - 20px) calc(1em + 2px),
+calc(100% - 15px) calc(1em + 2px),
+calc(100% - .5em) .5em;
+background-size:
+5px 5px,
+5px 5px,
+1.5em 1.5em;
+background-repeat: no-repeat;
+}</style>
+</head>
+
+<body>
+  <select id="browsers2" name="browsers">
+    <option value="크롬">크롬</option>
+    <option value="사파리">사파리</option>
+    <option value="엣지">엣지</option>
+    <option value="인터넷익스플로러">인터넷익스플로러</option>
+    <option value="파이어폭스">파이어폭스</option>
+    <option value="오페라">오페라</option>
+</select>
+
+
+</select>
+
+</body>
+
+</html>
