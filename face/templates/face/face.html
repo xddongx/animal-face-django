@@ -1,8 +1,10 @@
 {% extends 'animal/base.html' %}
+
 {% load static %}
 
 {% block title %}animal-face{% endblock %}
-{% block heat %}
+
+{% block head %}
 <style type="text/css">
     .img_wrap {
         width: 300px;
@@ -12,8 +14,12 @@
     .img_wrap.img {
         max-width: 100%;
     }
+    section {
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
 </style>
-<script type="text/javascript" src="{% static 'animal/js/jquery.js' %}" charset="utf-8">
+
 </script>
 <script type="text/javascript">
     function previewImage(targetObj, View_area) {
@@ -89,8 +95,8 @@
     function test() {
 
         if (confirm("결과를 확인하겠습니까?") == true) { //확인
-
-            location.href = "result_1.html";
+            // alert('test');
+            form.submit();
 
         } else { //취소
 
@@ -136,48 +142,46 @@
 {% endblock %}
 
 {% block content %}
-<!-- 이미지 업로드 미리보기 -->
-<section class='image_upload'>
+<form action="" name="form" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <!-- 이미지 업로드 미리보기 -->
+    <section class='image_upload'>
+        <center>
+            <div id='View_area'
+                style='position:relative; width: 500px; height: 500px; color: black; border: 0px solid black; dispaly: inline; '>
+            </div>
+
+            <input type="file" name="image_field" id="image_field" onchange="previewImage(this,'View_area')" accept="image/png, image/jpeg, image/jpg">
+        </center>
+    </section>
+
+    <!-- 성별, 나이 드롭다운 -->
     <center>
-        <div id='View_area'
-            style='position:relative; width: 500px; height: 500px; color: black; border: 0px solid black; dispaly: inline; '>
-        </div>
+        <section class='box1'>
+            <select id="browsers2" name="gender_field" style="margin-right: 15px;">
+                <option value="">--성별--</option>
+                <option value="남자"> 남자 </option>
+                <option value="여자"> 여자 </option>
+            </select>
 
-        <input type="file" name="profile_pt" id="profile_pt" onchange="previewImage(this,'View_area')">
+            <select id="browsers2" name="age_field" style="margin-left: 15px;">
+                <option value="">--나이--</option>
+                <option value="10대"> 10대 </option>
+                <option value="20대"> 20대 </option>
+                <option value="30대"> 30대 </option>
+                <option value="40대"> 40대</option>
+            </select>
     </center>
+    </section>
 
-</section>
 
-<!-- 성별, 나이 드롭다운 -->
-<center>
-    <section class='box1'>
-        <select id="browsers2" name="gender">
-            <option value="">성별</option>
-            <option value="남"> 남 </option>
-            <option value="여"> 여 </option>
-        </select>
-
-        <select id="browsers2" name="age">
-            <option value="">나이</option>
-            <option value="5세이상"> 5~9
-            <option value="10이상">10~19</option>
-            <option value="20이상">20~30</option>
-        </select>
+    <!-- 버튼 -->
+    <center>
+        <div class="button">
+            <button type="button"
+                style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px; margin-bottom: 20px; margin-top: 35px;"
+                onclick="test()">확인</button>
+</form>
+</div>
 </center>
-</section>
-
-
-<!-- 버튼 -->
-<center>
-    <div class="button">
-        <form action="memberremove.do?empno=${memrm.empno }" name="removefrm" method="post">
-
-
-            <table cellspacing="0" class="contexttbl">
-                <button type="button"
-                    style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
-                    onclick="test()">확인</button>
-        </form>
-    </div>
-</center>
+</form>
 {% endblock %}

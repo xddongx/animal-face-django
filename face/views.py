@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
+from django.shortcuts import render, HttpResponseRedirect, redirect, HttpResponse
 from django.views.generic import CreateView, DetailView
 from django.views.generic.edit import FormView
 from .models import Face, FaceHist
@@ -25,23 +25,25 @@ def FaceCV(request):
     # context = {'faceHist':faceHist}
     message = '정상처리'
     face_id = Face.objects.get(pk=2)
+    
     if request.method == 'POST':
-        facehist_form = FaceForm(request.POST)
-        if facehist_form.is_valid():
-            facehist = facehist_form.save(commit=False)
-            facehist.face = face_id
-            facehist.message = message
-            return redirect(self.get_absolute_url())
-        # print('retuest : ',request.POST)
-        # facehist = FaceHist(request.POST)
+        form = request.POST
         
-        # facehist = form.save(commit=False)
-        # facehist.message = message
-        # facehist.face = face_id
-        # facehist.save()
-        # print('facehist : ',facehist)
-        # FaceHist.
-        # return redirect()
+        facehist_form = FaceHist()
+        
+        facehist_form.age = form['age_field']
+        facehist_form.gender = form['gender_field']
+        print(form)
+        facehist_form.image = request.FILES['image_field']
+        facehist_form.message = message
+        facehist_form.face = face_id
+        
+        facehist_form.save()
+
+        context['face'] = face_id
+
+
+        return redirect(facehist_form.get_absolute_url(), context)
     else:
         return render(request, 'face/face.html')
 

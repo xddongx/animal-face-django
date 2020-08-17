@@ -21,8 +21,8 @@ class FaceHist(models.Model):
         ('40대 이상', '40대 이상'),
     )
 
-    age = models.CharField(max_length=20, choices=AGE_CHOICES)
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
+    age = models.CharField(max_length=20)
+    gender = models.CharField(max_length=10)
     image = models.ImageField(upload_to='media/%Y/%m')
     message = models.TextField(blank=True, null=True)
     face = models.ForeignKey(Face, on_delete=models.CASCADE, blank=True, null=True)
