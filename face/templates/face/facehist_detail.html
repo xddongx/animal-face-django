@@ -2,6 +2,12 @@
 {% load static %}
 
 {% block head %}
+<!-- Remember to include jQuery :) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script>
     function test() {
 
@@ -12,77 +18,8 @@
     function load(URL) {
         window.open(URL, "myWin", "left=300,top=300,width=400,height=300");
     }
-
-    var newWindow;
-
-    function openNewWindow() {
-
-        newWindow = window.open("미리보기.html", "newWindow", "height=1000, width=800, resizable=yes");
-
-    }
-
-    function openNewWindow1() {
-
-        newWindow = window.open("공유하기.html", "newWindow", "height=200, width=300, resizable=yes");
-
-    }
-
-    
 </script>
-<script>
-    function modal(id) {
-        var zIndex = 9999;
-        var modal = document.getElementById(id);
 
-        // 모달 div 뒤에 희끄무레한 레이어
-        var bg = document.createElement('div');
-        bg.setStyle({
-            position: 'fixed',
-            zIndex: zIndex,
-            left: '0px',
-            top: '0px',
-            width: '100%',
-            height: '100%',
-            overflow: 'auto',
-            // 레이어 색갈은 여기서 바꾸면 됨
-            backgroundColor: 'rgba(0,0,0,0.4)'
-        });
-        document.body.append(bg);
-
-        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-        modal.querySelector('.modal_close_btn').addEventListener('click', function() {
-            bg.remove();
-            modal.style.display = 'none';
-        });
-
-        modal.setStyle({
-            position: 'fixed',
-            display: 'block',
-            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-            // 시꺼먼 레이어 보다 한칸 위에 보이기
-            zIndex: zIndex + 1,
-
-            // div center 정렬
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            msTransform: 'translate(-50%, -50%)',
-            webkitTransform: 'translate(-50%, -50%)'
-        });
-    }
-
-    // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
-    Element.prototype.setStyle = function(styles) {
-        for (var k in styles) this.style[k] = styles[k];
-        return this;
-    };
-
-    document.getElementById('popup_open_btn').addEventListener('click', function() {
-        // 모달창 띄우기
-        modal('my_modal');
-    });
-</script>
 <style>
     #my_modal {
         display: none;
@@ -99,7 +36,6 @@
         right: 10px;
     }
 </style>
-
 {% endblock %}
 
 {% block content %}
@@ -133,12 +69,10 @@
     <div class="button">
 
         <center>
-            <button type="button"
-                style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
-                onclick="openNewWindow()">미리보기</button>
-            <button type="button"
-                style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
-                data-toggle="modal" data-target="#myModal">공유하기</button>
+            <a href="#preview" rel="modal:open"><button type="button"
+                    style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;">미리보기</button></a>
+            <a href="#modals" rel="modal:open"><button type="button"
+                    style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;">공유하기</button></a>
             <!--onclick="openNewWindow1()"-->
 
             </form>
@@ -154,19 +88,64 @@
                     onclick="test()">다운로드</button>
                 <button type="button"
                     style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
-                    onclick="location.href='result.html'">다시하기</button>
+                    onclick="location.href='/face/'">다시하기</button>
             </form>
     </div>
     </center>
 
 </section>
 
-<div id="my_modal">
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita dolore eveniet laborum repellat sit distinctio, ipsa rem dicta alias velit? Repellat doloribus mollitia dolorem
-    voluptatum ex reiciendis aut in incidunt?
-    <a class="modal_close_btn">닫기</a>
+<!-- Modal HTML embedded directly into document -->
+<div id="modals" class="modal">
+    <form action="modal/" method="POST">{% csrf_token %}
+        <!-- 공유방법 -->
+        <section>
+            <center>
+                <select name="file">
+                    <option value="">파일 종류</option>
+                    <option value=".png">PNG</option>
+                    <option value=".jpg">JPG</option>
+                    <option value=".pdf">PDF</option>
+
+                </select>
+                <select name="location">
+                    <option value="">경로</option>
+                    <option value="카카오톡">카카오톡</option>
+                    <option value="e-mail">E-mail</option>
+                </select><br>
+                <input type="text" name='id'>
+                <input type="text" name="pk" value="{{object.id}}" hidden>
+                
+            </center>
+        </section>
+        <input type="submit" value="공유하기">
+        <a href="#" rel="modal:close" style="float: right;"><button>취소</button></a>
+    </form>
 </div>
 
-<button id="popup_open_btn">팝업창 띄어 줘염</button>
+<!-- 미리보기 -->
+<div id="preview" class="modal">
+    <!-- 이미지 결과 -->
+    <section>
+        <center>
+            <img src="{{object.image.url}}">
+            <center>
+    </section>
+
+    <!-- 분석결과 -->
+    <section>
+        <center>
+            <p>{{object.face}}</p>
+        </center>
+    </section>
+
+    <!-- 동물별 특징 -->
+    <section>
+        <center>
+            <p>{{object.face.content}}</p>
+        </center>
+    </section>
+    <a href="#" rel="modal:close" style="float: right;"><button>취소</button></a>
+</div>
 
 {% endblock %}
