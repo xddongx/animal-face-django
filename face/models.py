@@ -1,12 +1,18 @@
 from django.db import models
+from markdownx.models import MarkdownxField
+from markdownx.utils import markdown
 
 class Face(models.Model):
     kind = models.CharField(max_length=20)
-    content = models.TextField()
-    artist = models.TextField()
-
+    content = MarkdownxField()
+    artist = MarkdownxField()
     def __str__(self):
         return '{}'.format(self.kind)
+
+    def get_markdown_content(self):
+        return markdown(self.content)
+    def get_markdown_artist(self):
+        return markdown(self.artist)
 
 class FaceHist(models.Model):
     GENDER_CHOICES =( 

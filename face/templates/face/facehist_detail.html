@@ -9,12 +9,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script>
-    function test() {
-
-        alert("다운로드를 하겠습니다");
-
-    }
-
     function load(URL) {
         window.open(URL, "myWin", "left=300,top=300,width=400,height=300");
     }
@@ -35,31 +29,60 @@
         top: 10px;
         right: 10px;
     }
+
+    @font-face {
+
+        src: url("{% static 'face/BMJUA_ttf.ttf' %}");
+        /*파일 연결 (..은 현재 위치가 css 폴더이기에 상위로 폴더로 가기 위함)*/
+
+        font-family: "jua";
+        /*위에 파일로 된 폰트는 이름을 jua라고 지정*/
+
+    }
+
+    .face {
+        /*html 파일의 h1을 꾸며준다.*/
+
+        font-family: "jua";
+        font-weight: bolder;
+
+
+    }
+
+    div.results > div {
+        margin: 30px auto 30px auto;
+    }
+
+    #results_feature {
+        text-align: center;
+        font-family: "jua";
+        font-weight: bolder;
+        font-size: 25px;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- 이미지 결과 -->
-<section>
-    <center>
-        <img src="{{object.image.url}}">
+<div class="results">
+    <!-- 이미지 결과 -->
+    <div id="image">
         <center>
-</section>
+            <img src="{{object.image.url}}">
+            <center>
+    </div>
+    <!-- 분석결과 -->
+    <div id="result_face">
+        <center>
+            <h1 class="face">{{object.face}}</h1>
+        </center>
+    </div>
+    <!-- 동물별 특징 -->
+    <div id="results_feature">
 
-<!-- 분석결과 -->
-<section>
-    <center>
-        <p>{{object.face}}</p>
-    </center>
-</section>
+        <p>{{object.face.get_markdown_content | safe}}</p>
 
-<!-- 동물별 특징 -->
-<section>
-    <center>
-        <p>{{object.face.content}}</p>
-    </center>
-</section>
-
+    </div>
+</div>
 
 
 
@@ -70,28 +93,15 @@
 
         <center>
             <a href="#preview" rel="modal:open"><button type="button"
-                    style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;">미리보기</button></a>
+                    style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;margin-right: 7px; margin-left: 7px;">미리보기</button></a>
             <a href="#modals" rel="modal:open"><button type="button"
-                    style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;">공유하기</button></a>
-            <!--onclick="openNewWindow1()"-->
+                    style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px; margin-right: 7px; margin-left: 7px;">공유하기</button></a>
+            <button type="button"
+                style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px; margin-right: 7px; margin-left: 7px;"
+                onclick="location.href='/face/'">다시하기</button>
 
-            </form>
         </center>
     </div>
-    <br>
-    <!--  다시하기, 다운로드 하기 버튼 -->
-    <div>
-        <center>
-            <form action="memberremove.do?empno=${memrm.empno }" name="removefrm" method="post">
-                <button type="button"
-                    style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
-                    onclick="test()">다운로드</button>
-                <button type="button"
-                    style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
-                    onclick="location.href='/face/'">다시하기</button>
-            </form>
-    </div>
-    </center>
 
 </section>
 
@@ -115,7 +125,7 @@
                 </select><br>
                 <input type="text" name='id'>
                 <input type="text" name="pk" value="{{object.id}}" hidden>
-                
+
             </center>
         </section>
         <input type="submit" value="공유하기">

@@ -33,7 +33,7 @@ def FaceCV(request):
         facehist_form.face = face_id
         
         facehist_form.save()
-
+        context = {}
         context['face'] = face_id
 
 
@@ -55,10 +55,10 @@ def FaceModal(request):
             data['From'] = keys.G_MAILE_ID
             data['To'] = form['id']
             # 텍스트 형식의 본문 내용
-            # text = '선택하신 파일로 전송되었습니다.'
-            # msg = MIMEText(text, 'plain')
-            # data.attach(msg)
-            # print(data)
+            text = '선택하신 파일로 전송되었습니다.'
+            msg = MIMEText(text, 'plain')
+            data.attach(msg)
+            print(data)
 
             # 이미지 전송 실패
             # 텍스트 전송 선공
