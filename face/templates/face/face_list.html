@@ -1,51 +1,54 @@
 {% extends 'animal/base.html' %}
 {% load static %}
-
-
+{% block head%}
+<style>
+    h1, h2 {
+      font-family: "jua";
+    }
+    .overlay > ul{ 
+        font-size: 20px;
+    }
+</style>
+{% endblock %}
 {% block intro %}
-	<!-- Intro -->
-	<section class="intro">
-
-		<center>
-			<span style=" font: italic bold 1.5em/1em Georgia, serif ; color: #000080;">
-				관상가 양반 내가 호랭이가 될 상인가??
-				<hr>
-			</span>
-		</center>
-	</section>
+<!-- Intro -->
+<section class="intro">
+    <center>
+        <span style=" color: #000080;font-size: 30px;">관상가 양반 내가 호랭이가 될 상인가??</span><hr>
+    </center>
+</section>
 
 
 
 
 
-	<!-- About -->
-	<section class="about" id="about">
-		<div class="container about">
-			<div class="row">
-				<center>
-					<p>
-						<span style=" font: italic bold 1.5em/1em Georgia, serif ;">
-							안녕하세요~!!! <br>
-							'animal-face'팀 입니다<br>
-							평소 자신의 <span style="color:blue"><strong>동물 상</strong></span>이 궁금하시다면<br>
-							밑에 <span style="color:pink"><b>확인 버튼</b></span>를 눌러주새욤~!!!
-						</span>
-					</p>
-				</center>
-			</div>
-		</div>
-	</section>
+<!-- About -->
+<section class="about" id="about">
+    <div class="container about">
+        <div class="row">
+            <center>
+                <p>
+                    <span style=" font: italic bold 1.5em/1em Georgia, serif ;">
+                        안녕하세요. <span style="color: darkturquoise; font-size: 30px;">'관상가 양반'</span>팀 입니다.<br>
+                        자신이 어떤 동물상인지 궁금하시다면<br>
+                        지금 확인해 보세요.
+                    </span>
+                </p>
+            </center>
+        </div>
+    </div>
+</section>
 
 
-	<center>
-		<div class="button">
-			<button type="button"
-				style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
-				onclick="location.href='/face/'">확인</button>
+<center>
+    <div class="button">
+        <button type="button"
+            style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;"
+            onclick="location.href='/face/'">나의 동물상은?</button>
 
-		</div>
-	</center>
-{% endblock %}}
+    </div>
+</center>
+{% endblock %}
 {% block content %}
 <!-- Gallery -->
 <section id="portfolio">
@@ -55,7 +58,7 @@
             <div class="col-md-6 thumbnail">
                 <div class="hovereffect">
                     <div class="col-md-12 photo-{{forloop.counter}}"></div>
-                
+
                     <a href="#mybox" data-toggle="modal" data-slide-to="0">
                         <div class="overlay">
                             <h1 style="font-weight: bold;">{{animal.kind}}</h1><br>
@@ -75,7 +78,8 @@
                     <a href="#mybox" data-toggle="modal" data-slide-to="3">
                         <div class="overlay">
                             <h1 style="font-weight: bold;">준비중</h1>
-                            <br><hr>
+                            <br>
+                            <hr>
                             <p style="font-size: large;"><b>준비중 입니다</b></p>
                         </div>
                     </a>

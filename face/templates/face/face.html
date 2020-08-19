@@ -147,31 +147,31 @@
     <section class='image_upload'>
         <center>
             <div id='View_area'
-                style='position:relative; width: 500px; height: 500px; color: black; border: 0px solid black; dispaly: inline; '>
+                style='position:relative; width: 500px; height: 500px; color: black; border: 0px solid black; display: inline;'>
             </div>
 
-            <input type="file" name="image_field" id="image_field" onchange="previewImage(this,'View_area')" accept="image/png, image/jpeg, image/jpg">
+            <input type="file" name="image_field" id="image_field" onchange="previewImage(this,'View_area')" accept="image/png, image/jpeg, image/jpg" style=" margin-top: 30px;">
         </center>
     </section>
 
     <!-- 성별, 나이 드롭다운 -->
     <center>
-        <section class='box1'>
+        <section class='box1' style="text-align: center;">
             <select id="browsers2" name="gender_field" style="margin-right: 15px;">
-                <option value="">--성별--</option>
+                <option value="">-- 성별 --</option>
                 <option value="남자"> 남자 </option>
                 <option value="여자"> 여자 </option>
             </select>
 
             <select id="browsers2" name="age_field" style="margin-left: 15px;">
-                <option value="">--나이--</option>
+                <option value="">-- 나이 --</option>
                 <option value="10대"> 10대 </option>
                 <option value="20대"> 20대 </option>
                 <option value="30대"> 30대 </option>
                 <option value="40대"> 40대</option>
             </select>
+        </section>
     </center>
-    </section>
 
 
     <!-- 버튼 -->
