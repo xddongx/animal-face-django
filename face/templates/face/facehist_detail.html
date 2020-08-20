@@ -31,22 +31,28 @@
     }
 
     @font-face {
-
         src: url("{% static 'face/BMJUA_ttf.ttf' %}");
         /*파일 연결 (..은 현재 위치가 css 폴더이기에 상위로 폴더로 가기 위함)*/
-
         font-family: "jua";
         /*위에 파일로 된 폰트는 이름을 jua라고 지정*/
-
+    }
+    #results_artist > center > p {
+        /*html 파일의 h1을 꾸며준다.*/
+        font-size: 30px;
+        font-family: "jua";
+        font-weight: bolder;
+    }
+    #results_artist > ul {
+        /*html 파일의 h1을 꾸며준다.*/
+        font-size: 25px;
+        font-family: "jua";
+        font-weight: bolder;
     }
 
     .face {
         /*html 파일의 h1을 꾸며준다.*/
-
         font-family: "jua";
         font-weight: bolder;
-
-
     }
 
     div.results > div {
@@ -54,10 +60,40 @@
     }
 
     #results_feature {
-        text-align: center;
         font-family: "jua";
         font-weight: bolder;
         font-size: 25px;
+    }
+    #results_feature > center > p {
+        text-align: center;
+        font-family: "jua";
+        font-weight: bolder;
+        font-size: 30px;
+    }
+    #preview {
+        margin-top: 100px;
+    }
+    #preview > section {
+        margin-top: 30px;
+        margin-bottom: 20px; 
+        padding: 0%;
+        font-size: 20px;
+    }
+    #preview > section > p {
+        font-family: "jua";
+        font-weight: bolder;
+        font-size: 30px;
+    }
+    .pre_img {
+        width:80%;
+    }
+    .pre_content {
+        width: 60%;
+    }
+    .pre_face {
+        font-family: "jua";
+        font-weight: bolder;
+        font-size: 35px;
     }
 </style>
 {% endblock %}
@@ -73,14 +109,23 @@
     <!-- 분석결과 -->
     <div id="result_face">
         <center>
-            <h1 class="face">{{object.face}}</h1>
+            <h1 class="face">{{object.face.kind}}</h1>
         </center>
     </div>
     <!-- 동물별 특징 -->
-    <div id="results_feature">
-
+    <div id="results_feature" style="width: 40%;">
+        <center>
+            <p>특징</p>
+        </center>
         <p>{{object.face.get_markdown_content | safe}}</p>
-
+        
+    </div>
+    <!-- 대표 연예인 -->
+    <div id="results_artist" style="width: 40%;">
+        <center>
+            <p>{{object.face.kind}} 연예인</p>
+        </center>
+        <p>{{object.face.get_markdown_artist | safe}}</p>
     </div>
 </div>
 
@@ -134,26 +179,35 @@
 </div>
 
 <!-- 미리보기 -->
+
 <div id="preview" class="modal">
+    <div class="previewHeader">
+        <img src="{% static 'animal/img/logo.png' %}">
+    </div>
+    <hr>
     <!-- 이미지 결과 -->
     <section>
         <center>
-            <img src="{{object.image.url}}">
+            <img class="pre_img" src="{{object.image.url}}">
             <center>
     </section>
 
     <!-- 분석결과 -->
     <section>
         <center>
-            <p>{{object.face}}</p>
+            <p class="pre_face">{{object.face.kind}}</p>
         </center>
     </section>
 
     <!-- 동물별 특징 -->
     <section>
-        <center>
-            <p>{{object.face.content}}</p>
-        </center>
+        <p>특징</p> 
+        <p class="pre_content">{{object.face.get_markdown_content | safe}}</p>
+    </section>
+    <!-- 대표 연예인 -->
+    <section>
+        <p>{{object.face.kind}} 연예인</p>
+        <p class="pre_content">{{object.face.get_markdown_artist | safe}}</p>
     </section>
     <a href="#" rel="modal:close" style="float: right;"><button>취소</button></a>
 </div>
