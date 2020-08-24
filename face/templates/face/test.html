@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+    <!-- <meta http-equiv="content-type" content="text/html; charset=enc-kr"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         @font-face {
+            src: url("{% static 'face/BMJUA_ttf.ttf' %}");
+            /*파일 연결 (..은 현재 위치가 css 폴더이기에 상위로 폴더로 가기 위함)*/
+            font-family: "jua";
+            /*위에 파일로 된 폰트는 이름을 jua라고 지정*/
+        }
+        * {
+            /*html 파일의 h1을 꾸며준다.*/
+            font-family: "jua";
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+    <h1>test html pdf</h1>
+    object{{object}}<br>
+    data{{data}}<br>
+    facehist{{facehist}}<br>
+    face{{face_id}}<br>
+    안녕
+    as
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal face pdf</title>
+    <style>
+        @font-face {
+            src: url("{% static '/face/BMJUA_ttf.ttf' %}");
+            /*파일 연결 (..은 현재 위치가 css 폴더이기에 상위로 폴더로 가기 위함)*/
+            font-family: "jua";
+            /*위에 파일로 된 폰트는 이름을 jua라고 지정*/
+        }
+        p {
+            font-size: 35px;
+        }
+        * {
+            font-family: "jua";
+            font-weight: bolder;
+            font-size: 25px;
+        }
+        #preview {
+            width: 100%;
+            text-align: left;
+            
+        }
+        #preview > div {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+    </style>
+</head>
+
+<body>
+<div id="preview">
+        <div class="previewHeader">
+            <img src="{% static 'animal/img/logo.png' %}">
+        </div>
+        <hr>
+        <!-- 이미지 결과 -->
+        <div id="result_image">
+            <center>
+                <img src="{{image.url}}">
+            </center>
+        </div>
+
+        <!-- 분석결과 -->
+        <div>
+            <center>
+                <p>{{face.kind}}</p>
+            </center>
+        </div>
+
+        <!-- 동물별 특징 -->
+        <div id="result_content" style="width: 40%;">
+            <center>
+                <p>특징</p>
+            </center>
+            <p>{{face.get_markdown_content | safe}}</p>
+
+        </div>
+
+        <!-- 대표 연예인 -->
+        <div id="result_artist" style="width: 40%;">
+            <center>
+                <p>{{face.kind}} 연예인</p>
+            </center>
+            <p>{{face.get_markdown_artist | safe}}</p>
+
+        </div>
+    </div>
+
+</body>
+</html>

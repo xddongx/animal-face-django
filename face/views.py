@@ -8,10 +8,14 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.application import MIMEApplication
-import smtplib, os, re
+import smtplib, os, re, sys, pdfkit, datetime, time
+from datetime import date
 from config import keys
 from django.conf import settings
-
+from xhtml2pdf import pisa 
+from django.template import Context
+from django.template.loader import get_template
+from io import StringIO
 
 
 def FaceCV(request):
@@ -82,3 +86,36 @@ def FaceModal(request):
             print('sent')                
             return redirect('face:create')
         return redirect('face:create')
+
+def Screenshot(request, pk):
+
+    facehist = FaceHist.objects.get(pk=pk)
+    face_id = Face.objects.get(pk=facehist.face.pk)
+    context ={
+        'image': facehist.image,
+        'face': face_id,
+    }
+    return render(request, 'face/screenshot.html', context)
+
+
+def generate_PDF(request):
+    pk_ = 17
+
+    url = 'http://localhost:8000/face/facehist/{}/screenshot'.format(pk_)
+    filename = time.strftime('%d-%H-%M')
+
+    toyear = str(time.strftime('%Y'))
+    tomonth = str(time.strftime('%m'))
+    dir_path = './_media/media/pdf/'
+
+    if not(os.path.isdir(dir_path+toyear)):
+        os.mkdir(os.path.join(dir_path+toyear))
+        if not(os.path.isdir(dir_path+toyear+tomonth)):
+            os.mkdir(os.path.join(dir_path+toyear+'/'+tomonth))
+
+
+    config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+    pdfkit.from_url(url, './_media/media/pdf/{}/{}/{}.pdf'.format(toyear,tomonth, filename), configuration=config)
+
+    return redirect('animal:index')
+
