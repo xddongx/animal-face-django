@@ -128,3 +128,26 @@ def send_mail(pk, cl_id):
     # quit을 보내고 접속을 종료하고 메일을 보낸다.
     server.quit()
 
+
+from pychartjs import BaseChart, ChartType, Color                                     
+
+class MyBarGraph(BaseChart):
+
+    type = ChartType.Doughnut
+
+    class data:
+        label = "Numbers"
+        data = [12, 19, 3, 17, 10]
+        backgroundColor = Color.Green
+    class labels:
+        label:['고양이', '토끼', '됻']
+
+def homepage(request):
+
+    NewChart = MyBarGraph()
+
+    ChartJSON = NewChart.get()
+
+    return render(request=request,
+                  template_name='main/home.html',
+                  context={"chartJSON": ChartJSON})

@@ -26,10 +26,20 @@
             <img src="{{object.image.url}}">
             <center>
     </div>
-    
+
 
     <!-- 그래프 -->
+    <canvas id="myChart"></canvas>
 
+    <script>
+        var data = {
+            {
+                chartJSON | safe
+            }
+        }
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, data);
+    </script>
     <!-- 분석결과 -->
     <div id="result_face">
         <center>
@@ -42,7 +52,7 @@
             <p text-align:left>특징</p>
         </center>
         <p>{{object.face.get_markdown_content | safe}}</p>
-        
+
     </div>
     <!-- 대표 연예인 -->
     <div id="results_artist" style="width: 40%;">
@@ -121,6 +131,7 @@
             <div id="container"></div>
         </figure>
     </div>
+    
     <!-- 분석결과 -->
     <section>
         <center>
@@ -130,7 +141,7 @@
 
     <!-- 동물별 특징 -->
     <section>
-        <p>특징</p> 
+        <p>특징</p>
         <p class="pre_content">{{object.face.get_markdown_content | safe}}</p>
     </section>
     <!-- 대표 연예인 -->
