@@ -7,22 +7,19 @@ from django.urls import reverse_lazy
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+from email.mime.base import MIMEBase
 from email.mime.application import MIMEApplication
 import smtplib, os, re, sys, pdfkit, datetime, time
 from datetime import date
 from config import keys
 from django.conf import settings
 from xhtml2pdf import pisa 
-from django.template import Context
-from django.template.loader import get_template
-from io import StringIO
+
 
 
 def FaceCV(request):
-    # faceHist = FaceHist.objects.all()
-    # context = {'faceHist':faceHist}
-    message = '정상처리'
-    face_id = Face.objects.get(pk=2)
+    message = '정상처리'                    # 정상처리 메세지
+    face_id = Face.objects.get(pk=2)       # 선택된 동물상
     
     if request.method == 'POST':
         form = request.POST
@@ -37,9 +34,11 @@ def FaceCV(request):
         facehist_form.face = face_id
         
         facehist_form.save()
+        
         context = {}
-        context['face'] = face_id
-
+        context = {
+            'face' : face_id,
+        }
 
         return redirect(facehist_form.get_absolute_url(), context)
     else:
@@ -52,39 +51,12 @@ class FaceDV(DetailView):
 def FaceModal(request):
     if request.method == 'POST':
         form = request.POST
+        result_pk = form['pk']
         if form['location'] == 'e-mail':
-            face_pk = FaceHist.objects.get(pk=form['pk'])
-            data = MIMEMultipart('SendMail')
-            data['Subject'] = '동물상'
-            data['From'] = keys.G_MAILE_ID
-            data['To'] = form['id']
-            # 텍스트 형식의 본문 내용
-            text = '선택하신 파일로 전송되었습니다.'
-            msg = MIMEText(text, 'plain')
-            data.attach(msg)
-            print(data)
-
-            # 이미지 전송 실패
-            # 텍스트 전송 선공
-
-
-            # 메일 서버와 telnet 통신 개시
-            server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-            # server = smtplib.SMTP('smtp.gmail.com', 587)
-            # 메일 통신시 디버그
-            server.set_debuglevel(1)
-            # 헤로 한번 해주자(의미없음)
-            server.ehlo()
-            # tls 설정 주문 -tls 587 포트의 경우
-            # server.starttls
-            server.login(keys.G_MAILE_ID, keys.G_MAILE_PASSWORD)
-            # 메일 프로토콜 상 mail, rcpt, data순으로 메시지를 보내야 하는데 이걸 sendmail 함수에서 자동으로 해준다.
-            server.sendmail(keys.G_MAILE_ID, form['id'], data.as_string())
-            # quit을 보내고 접속을 종료하고 메일을 보낸다.
-            server.quit()
-
+            send_mail(result_pk, form['id'])
+            
             print('sent')                
-            return redirect('face:create')
+            return redirect('animal:index')
         return redirect('face:create')
 
 def Screenshot(request, pk):
@@ -98,10 +70,9 @@ def Screenshot(request, pk):
     return render(request, 'face/screenshot.html', context)
 
 
-def generate_PDF(request):
-    pk_ = 17
+def generate_PDF(result_pk):
 
-    url = 'http://localhost:8000/face/facehist/{}/screenshot'.format(pk_)
+    url = 'http://localhost:8000/face/facehist/{}/screenshot'.format(result_pk)
     filename = time.strftime('%d-%H-%M')
 
     toyear = str(time.strftime('%Y'))
@@ -117,5 +88,43 @@ def generate_PDF(request):
     config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
     pdfkit.from_url(url, './_media/media/pdf/{}/{}/{}.pdf'.format(toyear,tomonth, filename), configuration=config)
 
-    return redirect('animal:index')
+    # return redirect('animal:index')
+
+def send_mail(pk, cl_id):
+    data = MIMEMultipart()
+    data['Subject'] = '동물상'
+    data['From'] = keys.G_MAILE_ID
+    data['To'] = cl_id
+
+    # 텍스트 형식의 본문 내용
+    text = '요청하신 파일로 전송되었습니다.'
+    msg = MIMEText(text, 'plain')
+    data.attach(msg)
+
+    # pdf 형식의 본문 내용
+    generate_PDF(pk)
+    toyear = str(time.strftime('%Y'))
+    tomonth = str(time.strftime('%m'))
+    filename = time.strftime('%d-%H-%M')
+    file_path = './_media/media/pdf/'+toyear+'/'+tomonth+'/'+filename+'.pdf'
+
+    attach_binary = MIMEBase('application', 'octect-stream')
+    pdf = open(file_path,'rb')
+    part = MIMEApplication(pdf.read(), name='동물상.pdf')
+    data.attach(part)
+    
+    # 메일 서버와 telnet 통신 개시
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    # server = smtplib.SMTP('smtp.gmail.com', 587)
+    # 메일 통신시 디버그
+    server.set_debuglevel(1)
+    # 헤로 한번 해주자(의미없음)
+    server.ehlo()
+    # tls 설정 주문 -tls 587 포트의 경우
+    # server.starttls
+    server.login(keys.G_MAILE_ID, keys.G_MAILE_PASSWORD)
+    # 메일 프로토콜 상 mail, rcpt, data순으로 메시지를 보내야 하는데 이걸 sendmail 함수에서 자동으로 해준다.
+    server.sendmail(keys.G_MAILE_ID, cl_id, data.as_string())
+    # quit을 보내고 접속을 종료하고 메일을 보낸다.
+    server.quit()
 

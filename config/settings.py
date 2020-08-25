@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'face',
     'markdownx',
     'crispy_forms',
+    'chartjs',
 ]
 
 MIDDLEWARE = [
