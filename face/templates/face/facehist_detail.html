@@ -23,27 +23,47 @@
     <!-- 이미지 결과 -->
     <div id="image">
         <center>
-            <img src="{{object.image.url}}">
-            <center>
+            <img src="{{image.url}}" style="width: 30%;">
+        <center>
+    <!-- </div> -->
+
+
+        <!-- 그래프 -->
+        <div id="container" style="width: 60%; margin-top: 30px;">
+            <canvas id="doughnut-chart"></canvas>
+        </div>
     </div>
 
-
-    <!-- 그래프 -->
-    <canvas id="myChart"></canvas>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
-        var data = {
-            {
-                chartJSON | safe
+        var config = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: {{data.score | safe}},
+                    backgroundColor: ['#ffc31e','#00fa9a', '#ffb6c1'],
+                    label: 'Population'
+                }],
+                labels: {{data.kind | safe}},
+                hoverOffset: 4
+            },
+            options: {
+                responsive: true,
+                legend:{
+                    position:'bottom',
+                },
             }
-        }
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, data);
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById('doughnut-chart').getContext('2d');
+            window.myPie = new Chart(ctx, config);
+        };
     </script>
     <!-- 분석결과 -->
     <div id="result_face">
         <center>
-            <h1 class="face">{{object.face.kind}}</h1>
+            <h1 class="face">{{face.kind}}</h1>
         </center>
     </div>
     <!-- 동물별 특징 -->
@@ -51,15 +71,15 @@
         <center>
             <p text-align:left>특징</p>
         </center>
-        <p>{{object.face.get_markdown_content | safe}}</p>
+        <p>{{face.get_markdown_content | safe}}</p>
 
     </div>
     <!-- 대표 연예인 -->
     <div id="results_artist" style="width: 40%;">
         <center>
-            <p>{{object.face.kind}} 연예인</p>
+            <p>{{face.kind}} 연예인</p>
         </center>
-        <p>{{object.face.get_markdown_artist | safe}}</p>
+        <p>{{face.get_markdown_artist | safe}}</p>
     </div>
 </div>
 
@@ -71,7 +91,7 @@
     <div class="button">
 
         <center>
-            <a href="#preview" rel="modal:open"><button type="button"
+            <a href="#preview" rel="modal:open"><button type="button" name="premodal"
                     style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px;margin-right: 7px; margin-left: 7px;">미리보기</button></a>
             <a href="#modals" rel="modal:open"><button type="button"
                     style="color: black; background:pink; font-size:1em; border-radius:0.5em; padding:5px 20px; margin-right: 7px; margin-left: 7px;">공유하기</button></a>
@@ -103,7 +123,7 @@
                     <option value="e-mail">E-mail</option>
                 </select><br>
                 <input type="text" name='id'>
-                <input type="text" name="pk" value="{{object.id}}" hidden>
+                <input type="text" name="pk" value="{{facehist.id}}" hidden>
 
             </center>
         </section>
@@ -122,32 +142,57 @@
     <!-- 이미지 결과 -->
     <section>
         <center>
-            <img class="pre_img" src="{{object.image.url}}">
+            <img class="pre_img" src="{{image.url}}">
             <center>
     </section>
-    <!-- 그래프 -->
-    <div>
-        <figure class="highcharts-figure">
-            <div id="container"></div>
-        </figure>
-    </div>
-    
+        <!-- 그래프 -->
+        <div id="container" style="width: 60%; margin-top: 30px;">
+            <canvas id="doughnut-chart"></canvas>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        var config = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: {{data.score | safe}},
+                    backgroundColor: ['#ffc31e','#00fa9a', '#ffb6c1'],
+                    label: 'Population'
+                }],
+                labels: {{data.kind | safe}},
+                hoverOffset: 4
+            },
+            options: {
+                responsive: true,
+                legend:{
+                    position:'bottom',
+                },
+            }
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById('doughnut-chart').getContext('2d');
+            window.myPie = new Chart(ctx, config);
+        };
+    </script>
+
     <!-- 분석결과 -->
     <section>
         <center>
-            <p class="pre_face">{{object.face.kind}}</p>
+            <p class="pre_face">{{face.kind}}</p>
         </center>
     </section>
 
     <!-- 동물별 특징 -->
     <section>
         <p>특징</p>
-        <p class="pre_content">{{object.face.get_markdown_content | safe}}</p>
+        <p class="pre_content">{{face.get_markdown_content | safe}}</p>
     </section>
     <!-- 대표 연예인 -->
     <section>
-        <p>{{object.face.kind}} 연예인</p>
-        <p class="pre_content">{{object.face.get_markdown_artist | safe}}</p>
+        <p>{{face.kind}} 연예인</p>
+        <p class="pre_content">{{face.get_markdown_artist | safe}}</p>
     </section>
     <a href="#" rel="modal:close" style="float: right;"><button>취소</button></a>
 </div>

@@ -15,18 +15,7 @@ class Face(models.Model):
         return markdown(self.artist)
 
 class FaceHist(models.Model):
-    GENDER_CHOICES =( 
-        ("남자", "남자"), 
-        ("여자", "여자")
-    ) 
-
-    AGE_CHOICES =(
-        ('10대', '10대'),
-        ('20대', '20대'),
-        ('30대', '30대'),
-        ('40대 이상', '40대 이상'),
-    )
-
+    # unique_id = models.AutoField(primary_key=True)
     age = models.CharField(max_length=20)
     gender = models.CharField(max_length=10)
     image = models.ImageField(upload_to='media/%Y/%m')
@@ -39,3 +28,11 @@ class FaceHist(models.Model):
 
     def get_absolute_url(self):
         return '/face/facehist/{}'.format(self.pk)
+
+class FaceScore(models.Model):
+    kind = models.CharField(max_length=50)
+    score = models.CharField(max_length=20)
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{}'.format(self.kind)

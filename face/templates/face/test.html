@@ -10,7 +10,16 @@
     <canvas id="myChart" width="400" height="400"></canvas>
 
 <script>
-    var data = {{ chartJSON | safe }}
+    var data = {
+        type:'ChartType.Doughnut',
+        data:{
+            labels:['고양이','토끼','용'],
+            datasets:[{
+                data: [60, 25, 15],
+                backgroundColor:['#ffc31e','#ffb6c1','#00fa9a'],
+            }]
+        }
+    }
     var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, data);
 </script>
