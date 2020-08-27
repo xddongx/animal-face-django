@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, redirect, HttpResponse
 from django.views.generic import CreateView, DetailView
 from django.views.generic.edit import FormView
-from .models import Face, FaceHist, FaceScore
+from .models import Face, FaceHist
 from .forms import FaceForm
 from django.urls import reverse_lazy
 from email.mime.multipart import MIMEMultipart
@@ -76,7 +76,7 @@ def Screenshot(request, pk):
 # pdf파일 제작
 def generate_PDF(result_pk):
     url = 'http://localhost:8000/face/facehist/{}/screenshot'.format(result_pk)         # pdf 제작시 화면 url 보여지지는 않는다.
-    time.sleep(3)
+    time.sleep(2)
     filename = time.strftime('%d-%H-%M')                                                # 저장될 pdf이름 일-시간-분
 
     toyear = str(time.strftime('%Y'))                                                   # 현제 년도

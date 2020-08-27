@@ -4,28 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+        var chart = new CanvasJS.Chart("chartContainer", {        
+        data: [
+            {
+            type: "column",
+            dataPoints: [
+                { x: 10, y: 71 },
+                { x: 20, y: 55 },
+                { x: 30, y: 50 },
+                { x: 40, y: 65 },
+                { x: 50, y: 95 },
+                { x: 60, y: 68 },
+                { x: 70, y: 28 },
+                { x: 80, y: 34 },
+                { x: 90, y: 14 }
+            ]
+            }         
+        ]
+        });
 
-<script>
-    var data = {
-        type:'ChartType.Doughnut',
-        data:{
-            labels:['고양이','토끼','용'],
-            datasets:[{
-                data: [60, 25, 15],
-                backgroundColor:['#ffc31e','#ffb6c1','#00fa9a'],
-            }]
-        }
-    }
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, data);
-</script>
-
-{% autoescape off %}
-{{plot_div}}
-{%endautoescape%}
+        $('#chartModal').on('shown.bs.modal', function () {
+            chart.render();
+        });
+    </script>
+    <div class="container">
+        <h2>Chart Example</h2>
+        <!-- Trigger the modal with a button -->
+        <button type="button" id="modalBtn"class="btn btn-info btn-lg" data-toggle="modal" data-target="#chartModal">Open Modal</button>
+        <!-- Modal -->
+        <div class="modal fade" id="chartModal" role="dialog">
+          <div class="modal-dialog">   
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">CanvasJS Chart within Bootstrap Modal</h4>
+              </div>
+              <div class="modal-body">
+                 <div id="chartContainer" style="height: 360px; width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 </html>

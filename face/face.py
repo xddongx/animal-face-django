@@ -7,8 +7,13 @@ import time, os.path
 def animalmodel(image_path):
     categories = ['고양이상', '공룡상', '토끼상']
     nb_classes = len(categories)
-    image_w = 128
-    image_h = 128
+    # model-3
+    # image_w = 128
+    # image_h = 128
+
+    # model-7
+    image_w = 64
+    image_h = 64
 
     X = []
     filenames = []
@@ -30,7 +35,8 @@ def animalmodel(image_path):
     X.append(data)
 
     X = np.array(X)
-    model = load_model('C:/workspace/animal-face-django/face/static/face/animalmodel/animal-3.model')
+    # model = load_model('C:/workspace/animal-face-django/face/static/face/animalmodel/animal-3.model')
+    model = load_model('C:/workspace/animal-face-django/face/static/face/animalmodel/animal-7.model')
 
     prediction = model.predict(X)
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
