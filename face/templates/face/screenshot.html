@@ -46,7 +46,7 @@
         <!-- 이미지 결과 -->
         <div id="image">
             <center>
-                <img src="{{image.url}}" style="width: 30%;">
+                <img src="{{facehist.image.url}}" style="width: 30%;">
                 <center>
                     <!-- </div> -->
 
@@ -63,11 +63,11 @@
                 type: 'doughnut',
                 data: {
                     datasets: [{
-                        data: {{data.score | safe}},
+                        data: {{facehist.scores | safe}},
                         backgroundColor: ['#ffc31e', '#00fa9a', '#ffb6c1'],
                         label: 'Population'
                     }],
-                    labels: {{data.kind | safe}},
+                    labels: {{facehist.kinds | safe}},
                     hoverOffset: 4
                 },
                 options: {
@@ -87,25 +87,21 @@
         <!-- 분석결과 -->
         <div>
             <center>
-                <p>{{face.kind}}</p>
+                <p>{{facehist.face.kind}}</p>
             </center>
         </div>
 
         <!-- 동물별 특징 -->
         <div id="result_content" style="width: 50%;">
-            <center>
-                <p>특징</p>
-            </center>
-            <p>{{face.get_markdown_content | safe}}</p>
+            <p>특징</p>
+            <p>{{facehist.face.get_markdown_content | safe}}</p>
 
         </div>
 
         <!-- 대표 연예인 -->
         <div id="result_artist" style="width: 50%;">
-            <center>
-                <p>{{face.kind}} 연예인</p>
-            </center>
-            <p>{{face.get_markdown_artist | safe}}</p>
+            <p>{{facehist.face.kind}} 연예인</p>
+            <p>{{facehist.face.get_markdown_artist | safe}}</p>
 
         </div>
     </div>

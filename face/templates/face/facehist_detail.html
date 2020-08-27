@@ -23,7 +23,7 @@
     <!-- 이미지 결과 -->
     <div id="image">
         <center>
-            <img src="{{image.url}}" style="width: 30%;">
+            <img src="{{object.image.url}}" style="width: 30%;">
         <center>
     <!-- </div> -->
 
@@ -40,11 +40,11 @@
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: {{data.score | safe}},
+                    data: {{object.scores | safe}},
                     backgroundColor: ['#ffc31e','#00fa9a', '#ffb6c1'],
                     label: 'Population'
                 }],
-                labels: {{data.kind | safe}},
+                labels: {{object.kinds | safe}},
                 hoverOffset: 4
             },
             options: {
@@ -63,7 +63,7 @@
     <!-- 분석결과 -->
     <div id="result_face">
         <center>
-            <h1 class="face">{{face.kind}}</h1>
+            <h1 class="face">{{object.face.kind}}</h1>
         </center>
     </div>
     <!-- 동물별 특징 -->
@@ -71,16 +71,17 @@
         <center>
             <p text-align:left>특징</p>
         </center>
-        <p>{{face.get_markdown_content | safe}}</p>
+        <p>{{object.face.get_markdown_content | safe}}</p>
 
     </div>
     <!-- 대표 연예인 -->
     <div id="results_artist" style="width: 40%;">
         <center>
-            <p>{{face.kind}} 연예인</p>
+            <p>{{object.face.kind}} 연예인</p>
         </center>
-        <p>{{face.get_markdown_artist | safe}}</p>
+        <p>{{object.face.get_markdown_artist | safe}}</p>
     </div>
+    <a href="88/screenshot">이동</a>
 </div>
 
 
@@ -142,7 +143,7 @@
     <!-- 이미지 결과 -->
     <section>
         <center>
-            <img class="pre_img" src="{{image.url}}">
+            <img class="pre_img" src="{{object.image.url}}">
             <center>
     </section>
         <!-- 그래프 -->
@@ -156,11 +157,11 @@
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: {{data.score | safe}},
+                    data: {{ object.scores | safe }},
                     backgroundColor: ['#ffc31e','#00fa9a', '#ffb6c1'],
                     label: 'Population'
                 }],
-                labels: {{data.kind | safe}},
+                labels: {{ object.kinds | safe }},
                 hoverOffset: 4
             },
             options: {
@@ -180,19 +181,19 @@
     <!-- 분석결과 -->
     <section>
         <center>
-            <p class="pre_face">{{face.kind}}</p>
+            <p class="pre_face">{{object.face.kind}}</p>
         </center>
     </section>
 
     <!-- 동물별 특징 -->
     <section>
         <p>특징</p>
-        <p class="pre_content">{{face.get_markdown_content | safe}}</p>
+        <p class="pre_content">{{object.face.get_markdown_content | safe}}</p>
     </section>
     <!-- 대표 연예인 -->
     <section>
-        <p>{{face.kind}} 연예인</p>
-        <p class="pre_content">{{face.get_markdown_artist | safe}}</p>
+        <p>{{object.face.kind}} 연예인</p>
+        <p class="pre_content">{{object.face.get_markdown_artist | safe}}</p>
     </section>
     <a href="#" rel="modal:close" style="float: right;"><button>취소</button></a>
 </div>

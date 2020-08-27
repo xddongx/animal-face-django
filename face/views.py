@@ -37,49 +37,26 @@ def FaceCV(request):
         fileName = request.FILES['image_field'].name        # 이미지 파일 이름
         
         face_id, scores = face.animalmodel(fileName)        # 이미지 분석 결과, 점수들
-        print(face_id)
-        print(scores[0])
-
-        facehist_form.face = Face.objects.get(kind=face_id)
-        facehist_form.save()
+        facehist_form.face = Face.objects.get(kind=face_id) # 분석 얼굴상 결과
         
-        faceScore = FaceScore()
-        faceScore.kind = face_kinds
-        faceScore.score = scores
-        print(faceScore.kind, faceScore.score)
-        faceScore.save()
+        facehist_form.kinds = face_kinds                    # 얼굴상의 종류
+        facehist_form.scores = scores                       # 얼굴상의 점수들
+        facehist_form.save()
 
-        # data = faceScore.objects.last()
-        # context = {
-        #     'image': facehist.image,
-        #     'face' : facehist.face,
-        #     'data' : data,
-        # }
-        # print(context)
         return redirect(facehist_form.get_absolute_url())  # 분석 후 결과 페이지 
     else:
         return render(request, 'face/face.html')
 
 
 # 분석 결과 페이지
-# class FaceDV(DetailView):
-#     model = FaceHist                                        # 불러올 데이터
-def FaceDV(request, pk):
-    facehist = FaceHist.objects.get(pk=pk)
-    data = FaceScore.objects.last()
-    context = {
-        'image': facehist.image,
-        'face' : facehist.face,
-        'data' : data,
-        'facehist': facehist
-    }
-    return render(request, 'face/facehist_detail.html', context)
+class FaceDV(DetailView):
+    model = FaceHist                                        # 불러올 데이터
 
 # 결과 과를 받을 방법
 def FaceModal(request):
     if request.method == 'POST':
         form = request.POST
-        result_pk = form['pk']
+        result_pk = form['pk']                              # form으로 받은 pk
         if form['location'] == 'e-mail':                    # e-mail로 받기
             send_mail(result_pk, form['id'])                # e-mail보내는 함수 호출
             
@@ -91,18 +68,15 @@ def FaceModal(request):
 # pdf파일을 생성하기 위한 잠깐의 화면 화면에 보여지지 않음
 def Screenshot(request, pk):
     facehist = FaceHist.objects.get(pk=pk)
-    face_id = Face.objects.get(pk=facehist.face.pk)
-    data = FaceScore.objects.last()
     context ={
-        'image': facehist.image,
-        'face': face_id,
-        'data': data,
+        'facehist': facehist,
     }
     return render(request, 'face/screenshot.html', context)
 
 # pdf파일 제작
-def generate_PDF(result_pk, data):
-    url = 'http://localhost:8000/face/facehist/{}/screenshot?data={}'.format(result_pk, data)         # pdf 제작시 화면 url 보여지지는 않는다.
+def generate_PDF(result_pk):
+    url = 'http://localhost:8000/face/facehist/{}/screenshot'.format(result_pk)         # pdf 제작시 화면 url 보여지지는 않는다.
+    time.sleep(3)
     filename = time.strftime('%d-%H-%M')                                                # 저장될 pdf이름 일-시간-분
 
     toyear = str(time.strftime('%Y'))                                                   # 현제 년도
@@ -135,8 +109,7 @@ def send_mail(pk, cl_id):
     data.attach(msg)
 
     # pdf 형식의 본문 내용
-    score = FaceScore.objects.last()
-    generate_PDF(pk,score)                                    # pdf 파일 제작
+    generate_PDF(pk)                                    # pdf 파일 제작
     toyear = str(time.strftime('%Y'))                   
     tomonth = str(time.strftime('%m'))
     filename = time.strftime('%d-%H-%M')

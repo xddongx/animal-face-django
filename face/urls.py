@@ -20,8 +20,8 @@ from . import views
 app_name='face'
 urlpatterns = [
     path('', views.FaceCV, name='create'),
-    # path('facehist/<int:pk>', views.FaceDV.as_view(), name='detail'),
-    path('facehist/<int:pk>', views.FaceDV, name='detail'),
+    path('facehist/<int:pk>', views.FaceDV.as_view(), name='detail'),
+    # path('facehist/<int:pk>', views.FaceDV, name='detail'),
     path('facehist/modal/', views.FaceModal, name='modal'),
     path('facehist/<int:pk>/screenshot', views.Screenshot, name='screenshot'),
     path('screen/', views.generate_PDF),
