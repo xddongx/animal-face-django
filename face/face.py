@@ -36,7 +36,8 @@ def animalmodel(image_path):
 
     X = np.array(X)
     # model = load_model('C:/workspace/animal-face-django/face/static/face/animalmodel/animal-3.model')
-    model = load_model('C:/workspace/animal-face-django/face/static/face/animalmodel/animal-7.model')
+    # model = load_model('C:/workspace/animal-face-django/face/static/face/animalmodel/animal-7.model')
+    model = load_model('C:/workspace/animal-face-django/face/static/face/animalmodel/animal-9.model')
 
     prediction = model.predict(X)
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
