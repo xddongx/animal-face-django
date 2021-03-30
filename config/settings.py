@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
-from . import keys
-from . import my_settings
+# from decouple import config
+# from . import keys
+# from . import my_settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -81,7 +82,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = my_settings.DATABASES
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Password validation

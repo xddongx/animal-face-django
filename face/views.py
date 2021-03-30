@@ -14,7 +14,7 @@ from datetime import date
 from config import keys
 from django.conf import settings
 from xhtml2pdf import pisa 
-from face import face
+from . import face
 from werkzeug.utils import secure_filename
 
 
